@@ -45,6 +45,122 @@ var getEvents = function(artist) {
     });
 };
 
+// create a function for `spotify-this-song`command
+
+// get artist name
+function getArtists(artist){
+    return artist.Name;
+  }
+  
+// Call API and generate terminal scripts  
+var getSongs = function(songName) {
+    //Default search (if no song generateCommand): "The Sign" by Ace of Base
+    if (songName === '') {
+      // Set up default parameter 
+      nosong = 'album:the+sign%20artist:ace+of+base'
+      spotify.search(
+        {
+          type: "track",
+          query: nosong,
+        },
+        function(err, data) {
+          if (err) {
+            console.log("Error occurred: " + err);
+            return;
+          }
+          var songs = data.tracks.items;
+          console.log("------------------------------")
+          console.log("Suggested song:")
+          console.log('"' + songs[0].name + '" by ' + songs[0].artists.map(getArtists));
+          console.log("Visit: " + songs[0].preview_url )
+          console.log("------------------------------")
+        }
+      );
+    } 
+    // if song generateCommand, set up input(songName) as the parameter 
+    else {
+      spotify.search(
+        {
+          type: "track",
+          query: songName,
+        },
+        function(err, data) {
+          if (err) {
+            console.log("Error occurred: " + err);
+            return;
+          }
+          var songs = data.tracks.items;
+            console.log("------------------------------")
+          for (var i = 0; i < songs.length; i++) {
+            console.log(i + 1)
+            console.log("Artist Name: " + songs[i].artists.map(getArtists));
+            console.log("Song: " + songs[i].name);
+            console.log("Visit: " + songs[i].preview_url);
+            console.log("Album: " + songs[i].album.name);
+            console.log("------------------------------")
+          }
+        }
+      );
+    }
+};
+
+// create a function for `movie-this`command
+
+var getMovie = function(movieName) {
+    //Default search (if no movie generateCommand): 'Mr. Nobody.'
+    if (movieName === "") {
+      nomovie = "Mr Nobody";
+      var urlHit =
+      "http://www.omdbapi.com/?t=" + nomovie + "&y=&plot=full&tomatoes=true&apikey=trilogy";
+      
+      request(urlHit, function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+          var jsonData = JSON.parse(body);
+          console.log("If you haven't watched " + '"Mr. Nobody"'+  ", then you should visit: " + jsonData.Website);
+          console.log("It's on Netflix")
+        }
+      });
+    } 
+    else {
+      var urlHit =
+      "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=full&tomatoes=true&apikey=trilogy";
+      request(urlHit, function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+          var jsonData = JSON.parse(body);
+          console.log("------------------------------")
+          console.log("Moive title: " + jsonData.Title);
+          console.log("Released Year: " + jsonData.Year);
+          console.log("IMDB Rating: " + jsonData.imdbRating);
+          console.log("Rotten Tomatoes Rating: " + jsonData.tomatoRating);
+          console.log("Country: " + jsonData.Country);
+          console.log("Language: " + jsonData.Language);
+          console.log("Plot: " + jsonData.Plot);
+          console.log("Actors: " + jsonData.Actors);
+          console.log("------------------------------")
+        }
+      });
+    }
+  };
+
+// creat a function for `do-what-it-says`command
+
+var doWhatItSays = function() {
+    //LIRI will take the text inside of random.txt 
+    fs.readFile("random.txt", "utf8", function(error, data) {
+      
+      // Data from the text file
+      var dataArr = data.split(",");
+  
+      //Getting command with keyword input
+      if (dataArr.length === 2) {
+        command(dataArr[0], dataArr[1]);
+      } 
+      //Getting command without keyword input
+      else if (dataArr.length === 1) {
+        command(dataArr[0]);
+      }
+    });
+  };
 
 
 // choose command line
