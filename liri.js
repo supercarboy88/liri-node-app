@@ -29,17 +29,24 @@ var getEvents = function(artist) {
         if (!error && response.statusCode === 200) {
             var data = JSON.parse(body);
             if (!data.length) {
-                console.log("Sorry, we can't find event for this artist.");
+                var showError = "Sorry, we can't find event for this artist."
+                console.log(showError);
                 return;
             }
             console.log("-----" + artist + "-----");
             for (var i = 0; i < data.length; i++) {
                 var event = data[i];
-                console.log("#"+ parseInt(i + 1));
-                console.log("Venue: " + event.venue.name);
-                console.log("Location: " + event.venue.city + ", " + event.venue.country);
-                console.log("Date: " + moment(event.datetime).format("MM/DD/YYYY"));
-                console.log("------------------------------------------------");
+                var showEvent = [
+                  "#"+ parseInt(i + 1),
+                  "Venue: " + event.venue.name,
+                  "Location: " + event.venue.city + ", " + event.venue.country,
+                  "Date: " + moment(event.datetime).format("MM/DD/YYYY"),
+                  "------------------------------------------------"
+                ].join("\n");
+                fs.appendFile("log.txt", showEvent, function(err) {
+                  if (err) throw err;
+                console.log(showEvent);
+                });
             }
         }   
     });
