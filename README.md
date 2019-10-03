@@ -22,7 +22,7 @@ LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and R
 
 ## How does each LIRI command work?
 
-## [CLICK HERE](https://https://supercarboy88.github.io/liri-node-app/DEMO-VIDEO.mp4) TO SEE DEMO VIDEO
+## [CLICK HERE](https://supercarboy88.github.io/liri-node-app/DEMO-VIDEO.mp4) TO SEE DEMO VIDEO
 
 ### `concert-this`
 * Run `node liri.js concert-this <artist/band name here>`
