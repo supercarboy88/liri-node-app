@@ -29,24 +29,26 @@ var getEvents = function(artist) {
         if (!error && response.statusCode === 200) {
             var data = JSON.parse(body);
             if (!data.length) {
-                var showError = "Sorry, we can't find event for this artist."
-                console.log(showError);
+                var showEvent = "Sorry, we can't find event for this artist."
+                console.log(showEvent);
                 return;
             }
             console.log("-----" + artist + "-----");
             for (var i = 0; i < data.length; i++) {
                 var event = data[i];
-                var showEvent = [
-                  "#"+ parseInt(i + 1),
+                // create a showEvent as a string containing all the data we will print to the console
+                var showEvent= [
+                  "\n#"+ parseInt(i + 1),
                   "Venue: " + event.venue.name,
                   "Location: " + event.venue.city + ", " + event.venue.country,
                   "Date: " + moment(event.datetime).format("MM/DD/YYYY"),
                   "------------------------------------------------"
                 ].join("\n");
+                // Append showEvent to log.txt, print showEvent to the console
                 fs.appendFile("log.txt", showEvent, function(err) {
                   if (err) throw err;
-                console.log(showEvent);
                 });
+                console.log(showEvent);
             }
         }   
     });
@@ -56,7 +58,7 @@ var getEvents = function(artist) {
 
 // get artist name
 function getArtists(artist){
-    return artist.Name;
+    return artist.name;
   }
   
 // Call API and generate terminal scripts  
@@ -64,11 +66,11 @@ var getSongs = function(songName) {
     //Default search (if no song generateCommand): "The Sign" by Ace of Base
     if (songName === '') {
       // Set up default parameter 
-      nosong = 'album:the+sign%20artist:ace+of+base'
+      defaultsong = '"The Sign" by Ace of Base'
       spotify.search(
         {
           type: "track",
-          query: nosong,
+          query: defaultsong,
         },
         function(err, data) {
           if (err) {
@@ -76,15 +78,22 @@ var getSongs = function(songName) {
             return;
           }
           var songs = data.tracks.items;
-          console.log("------------------------------")
-          console.log("Suggested song:")
-          console.log('"' + songs[0].name + '" by ' + songs[0].artists.map(getArtists));
-          console.log("Visit: " + songs[0].preview_url )
-          console.log("------------------------------")
+          var showEvent= [
+            "------------------------------",
+            "Suggested song:",
+            '"' + songs[0].name + '" by ' + songs[0].artists.map(getArtists),
+            "Visit: " + songs[0].preview_url,
+            "------------------------------"
+          ].join("\n")
+          // Append showEvent to log.txt, print showEvent to the console
+          fs.appendFile("log.txt", showEvent, function(err) {
+            if (err) throw err;
+          });
+          console.log(showEvent);
         }
       );
     } 
-    // if song generateCommand, set up input(songName) as the parameter 
+    // if song Command, set up input(songName) as the parameter 
     else {
       spotify.search(
         {
@@ -99,12 +108,19 @@ var getSongs = function(songName) {
           var songs = data.tracks.items;
             console.log("------------------------------")
           for (var i = 0; i < songs.length; i++) {
-            console.log(i + 1)
-            console.log("Artist Name: " + songs[i].artists.map(getArtists));
-            console.log("Song: " + songs[i].name);
-            console.log("Visit: " + songs[i].preview_url);
-            console.log("Album: " + songs[i].album.name);
-            console.log("------------------------------")
+            var showEvent= [
+              i + 1,
+              "Artist Name: " + songs[i].artists.map(getArtists),
+              "Song: " + songs[i].name,
+              "Visit: " + songs[i].preview_url,
+              "Album: " + songs[i].album.name,
+              "------------------------------"
+            ].join("\n")
+            // Append showEvent to log.txt, print showEvent to the console
+            fs.appendFile("log.txt", showEvent, function(err) {
+            if (err) throw err;
+            });
+          console.log(showEvent);
           }
         }
       );
@@ -123,8 +139,15 @@ var getMovie = function(movieName) {
       request(urlHit, function(error, response, body) {
         if (!error && response.statusCode === 200) {
           var jsonData = JSON.parse(body);
-          console.log("If you haven't watched " + '"Mr. Nobody"'+  ", then you should visit: " + jsonData.Website);
-          console.log("It's on Netflix")
+          var showEvent= [
+            "If you haven't watched " + '"Mr. Nobody"'+  ", then you should visit: " + jsonData.Website,
+            "It's on Netflix"
+          ].join("\n")
+          // Append showEvent to log.txt, print showEvent to the console
+          fs.appendFile("log.txt", showEvent, function(err) {
+            if (err) throw err;
+          });
+          console.log(showEvent);
         }
       });
     } 
@@ -134,16 +157,22 @@ var getMovie = function(movieName) {
       request(urlHit, function(error, response, body) {
         if (!error && response.statusCode === 200) {
           var jsonData = JSON.parse(body);
-          console.log("------------------------------")
-          console.log("Moive title: " + jsonData.Title);
-          console.log("Released Year: " + jsonData.Year);
-          console.log("IMDB Rating: " + jsonData.imdbRating);
-          console.log("Rotten Tomatoes Rating: " + jsonData.tomatoRating);
-          console.log("Country: " + jsonData.Country);
-          console.log("Language: " + jsonData.Language);
-          console.log("Plot: " + jsonData.Plot);
-          console.log("Actors: " + jsonData.Actors);
-          console.log("------------------------------")
+          var showEvent= [
+            "Moive title: " + jsonData.Title,
+            "Released Year: " + jsonData.Year,
+            "IMDB Rating: " + jsonData.imdbRating,
+            "Rotten Tomatoes Rating: " + jsonData.tomatoRating,
+            "Country: " + jsonData.Country,
+            "Language: " + jsonData.Language,
+            "Plot: " + jsonData.Plot,
+            "Actors: " + jsonData.Actors,
+            "------------------------------"
+          ].join("\n")
+          // Append showEvent to log.txt, print showEvent to the console
+          fs.appendFile("log.txt", showEvent, function(err) {
+            if (err) throw err;
+          });
+          console.log(showEvent);
         }
       });
     }
