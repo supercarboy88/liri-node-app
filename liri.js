@@ -30,6 +30,10 @@ var getEvents = function(artist) {
             var data = JSON.parse(body);
             if (!data.length) {
                 var showEvent = "Sorry, we can't find event for this artist."
+                // Append showEvent to log.txt, print showEvent to the console
+                fs.appendFile("log.txt", showEvent, function(err) {
+                  if (err) throw err;
+                });
                 console.log(showEvent);
                 return;
             }
@@ -79,7 +83,7 @@ var getSongs = function(songName) {
           }
           var songs = data.tracks.items;
           var showEvent= [
-            "------------------------------",
+            "\n------------------------------",
             "Suggested song:",
             '"' + songs[0].name + '" by ' + songs[0].artists.map(getArtists),
             "Visit: " + songs[0].preview_url,
@@ -109,7 +113,7 @@ var getSongs = function(songName) {
             console.log("------------------------------")
           for (var i = 0; i < songs.length; i++) {
             var showEvent= [
-              i + 1,
+              "\n" + i + 1,
               "Artist Name: " + songs[i].artists.map(getArtists),
               "Song: " + songs[i].name,
               "Visit: " + songs[i].preview_url,
