@@ -1,11 +1,29 @@
 # liri-node-app
 liri-node-app
 
+### Overview
 
+LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and Recognition Interface, LIRI is a _Language_ Interpretation and Recognition Interface. LIRI will be a command line node app that takes in parameters and gives you back data.
+
+## Node packages used in this app: 
+* [npm init](https://docs.npmjs.com/cli/init)
+* [npm i require](https://www.npmjs.com/package/require)
+* [npm i request](https://www.npmjs.com/package/request)
+* [npm i moment](https://www.npmjs.com/package/moment)
+* [npm i dotenv](https://www.npmjs.com/package/dotenv)
+* [npm i node-spotify-api](https://www.npmjs.com/package/node-spotify-api)
+
+## App design:
+- LIRI will be a command line node app that takes in parameters and gives you back data.
+- Users have to run *`node liri.js'* + one of the following commands in the terminal to interact with LIRI
+   * `concert-this`
+   * `spotify-this-song`
+   * `movie-this`
+   * `do-what-it-says`
 
 ## How does each LIRI command work?
 
-## [CLICK HERE](https://) TO SEE DEMO VIDEO
+## [CLICK HERE](https://https://supercarboy88.github.io/liri-node-app/DEMO-VIDEO.mp4) TO SEE DEMO VIDEO
 
 ### `concert-this`
 * Run `node liri.js concert-this <artist/band name here>`
