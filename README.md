@@ -1,5 +1,4 @@
 # liri-node-app
-liri-node-app
 
 ### Overview
 
